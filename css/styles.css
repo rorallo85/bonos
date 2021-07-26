@@ -1,0 +1,22 @@
+body{
+    background-image: url(../img/fondo2.jpg) ;
+    background-position: center;
+    background-repeat: repeat;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.bg-light{
+    background-color: #e6faf9 !important;
+}
+
+.navbar-brand{
+    font-family: Lobster;
+}
+
+th{
+    font-family: Lobster;
+}
+
+#reiniciarBuscar{
+    display: none;
+}
