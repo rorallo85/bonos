@@ -279,6 +279,12 @@ window.onload = function() {
 
                         btnNuevoBono.setAttribute("id_cliente", id_attr);
                         btnNuevoBono.addEventListener('click', crear_bono, false);
+
+                        if(btsSellar.length > 0){
+                            btnNuevoBono.disabled = true;
+                        }else{
+                            btnNuevoBono.disabled = false;
+                        }
                                                                  
                     }
                                    
@@ -326,6 +332,12 @@ window.onload = function() {
                             element.setAttribute("id_cliente", id_cliente);
                             element.addEventListener('click', borrar_sesion, false);
                         });
+
+                        if(btsSellar.length > 0){
+                            btnNuevoBono.disabled = true;
+                        }else{
+                            btnNuevoBono.disabled = false;
+                        }
                     }
                                          
                 };
@@ -370,6 +382,12 @@ window.onload = function() {
                             element.setAttribute("id_cliente", id_cliente);
                             element.addEventListener('click', borrar_sesion, false);
                         });
+
+                        if(btsSellar.length > 0){
+                            btnNuevoBono.disabled = true;
+                        }else{
+                            btnNuevoBono.disabled = false;
+                        }
                                                                 
                     }
                                    
@@ -391,6 +409,7 @@ window.onload = function() {
      * 
      */
     var crear_bono = function(){
+        var id_cliente = this.getAttribute("id_cliente");
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', "index.php", true);
         xhr1.onreadystatechange = function() {
@@ -399,19 +418,20 @@ window.onload = function() {
                     console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
-                        /*cuerpoModalBonos.innerHTML = respuesta.html;
+                        cuerpoModalBonos.innerHTML = respuesta.html;
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         
+                        var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
-                            element.setAttribute("id_cliente", $id_cliente);
-                            element.addEventListener('click', sellar_bono, false);
+                            element.setAttribute("id_cliente", id_cliente);
+                            element.addEventListener('click', guardar_sesion, false);
                         });
 
                         var btsBorrar = document.getElementsByClassName('btnBorrar');
                         Array.from(btsBorrar).forEach(element => {
-                            element.setAttribute("id_cliente", $id_cliente);
-                            element.addEventListener('click', borrar_bono, false);
-                        });*/
+                            element.setAttribute("id_cliente", id_cliente);
+                            element.addEventListener('click', borrar_sesion, false);
+                        });
                                                                  
                     }
                                    
@@ -421,50 +441,14 @@ window.onload = function() {
 
         var data = new FormData();
         data.append('crear_bono', 'crear_bono');
-        data.append("bono[id_cliente]", this.getAttribute("id_cliente"));
-        data.append("bono[numero_sesiones]", 5);
+        data.append("bono[id_cliente]", id_cliente);
+        //Solucion temporal
+        data.append("id_cliente", id_cliente);
         xhr1.send(data);
     }
 
+    btnNuevoBono.addEventListener("click", crear_bono, false);
     
-    
-
-
-    
-
-
-    
-
-    function reiniciar_tarjeta(){
-        $id_cliente = this.getAttribute('id_cliente');
-        var xhr1 = new XMLHttpRequest();
-        xhr1.open('POST', "index.php", true);
-        xhr1.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    datosRespuesta = this.responseText;
-                    console.log(datosRespuesta);
-                    var respuesta = JSON.parse(datosRespuesta);
-                    if (respuesta.OK != null ) {
-                        tabla_bonos.outerHTML = respuesta.html;
-                        var btsSellar = document.getElementsByClassName('btnSellar');
-                        Array.from(btsSellar).forEach(element => {
-                            element.setAttribute("id_cliente", $id_cliente);
-                            element.addEventListener('click', sellar_bono, false);
-                        });
-                                                               
-                    }
-                                   
-                };
-        
-        };
-
-        var data = new FormData();
-        data.append('reiniciar_tarjeta', 'reiniciar_tarjeta');
-        data.append('id_cliente', $id_cliente);
-        xhr1.send(data);
-    }
-
-    //btnReiniciarBonos.addEventListener("click", reiniciar_tarjeta, false)
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
     /*++++++++++++++++++++++++++++++FUNCIONES IMPRIMIR+++++++++++++++++++++++++++++++++++++++++++++*/

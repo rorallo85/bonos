@@ -14,9 +14,16 @@ if(count(get_included_files()) ==1) {
   exit("Acceso directo no permitido.");
 }
 
-function mostrarBonos($bono){
+function mostrarBonos($bono, $posicion = null){
   ob_start();
 ?>
+  <!--Barra para navegar entre bonos-->
+  <?php 
+    if($posicion != null){
+      echo "<div class='text-center'>
+    }
+  ?>
+
   <!--Tabla para sellar o modificar bonos-->
   <table class="table table-bordered text-center" id="tabla_bonos">
     <caption>Nº de Bono: <?= $bono->id_bono ?></caption>

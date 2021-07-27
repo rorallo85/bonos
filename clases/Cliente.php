@@ -179,6 +179,18 @@ class Cliente {
         
     }
 
+
+    /**
+     * funcion que recupera de la base de datos un cliente con el nombre o apellidos indicado
+     * 
+     * @param $id ID del cliente que se quiere recuperar
+     * @return $cliente instancia del cliente con el ID seleccionado 
+     */
+    public function anadirBonoCliente($arrayBono) {
+        $bono = Bono::crearObjetoBono($arrayBono);
+        $bono->guardar();
+        array_push($this->bonos, $bono);
+    }
     
 }
 
