@@ -100,6 +100,7 @@ function mostrarCliente($clientes) {
             
           </div>
           <div class="modal-footer">
+            <a href="" id="btnImprimirBono" class="me-3 fs-3 text-dark"><i class="bi bi-printer-fill"></i></a>
             <button type="button" id="btnNuevoBono" class="btn btn-outline-success">Nuevo Bono</button>
             <button type="button" id="btnCerrarModalBonos" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
           </div>

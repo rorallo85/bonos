@@ -112,6 +112,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['imprimir_cliente'])){
   exit(0);
 }
 
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['imprimir_bono'])){
+  $cliente = Cliente::getClienteById($_POST['id_cliente']);
+  $posicion = $_POST['bono_actual']-1;
+  echo json_encode(['OK'=>$cliente, 'html'=>imprimirBonoActual($cliente, $cliente->bonos[$posicion])]);
+  exit(0);
+}
+
 /**
  * Carga la página principal
  */

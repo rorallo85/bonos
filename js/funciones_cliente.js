@@ -260,10 +260,12 @@ window.onload = function() {
         xhr1.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     datosRespuesta = this.responseText; 
-                    console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
                         cuerpoModalBonos.innerHTML = respuesta.html;
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
 
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
@@ -276,13 +278,11 @@ window.onload = function() {
                             element.setAttribute("id_cliente", id_attr);
                             element.addEventListener('click', borrar_sesion, false);
                         });
-
-                        anterior.addEventListener('click', bono_anterior, false);
-                        siguiente.addEventListener('click', bono_siguiente, false);
-  
+ 
                         btnNuevoBono.setAttribute("id_cliente", id_attr);
                         btnNuevoBono.addEventListener('click', crear_bono, false);
-
+                        btnImprimirBono.addEventListener('click', imprimir_bono, false);
+                        
                         if(btsSellar.length > 0){
                             btnNuevoBono.disabled = true;
                         }else{
@@ -320,7 +320,6 @@ window.onload = function() {
         xhr1.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     datosRespuesta = this.responseText;
-                    console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
                         cuerpoModalBonos.innerHTML = respuesta.html;
@@ -375,7 +374,6 @@ window.onload = function() {
         xhr1.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     datosRespuesta = this.responseText;
-                    console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
                         cuerpoModalBonos.innerHTML = respuesta.html;
@@ -428,11 +426,12 @@ window.onload = function() {
         xhr1.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     datosRespuesta = this.responseText; 
-                    console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
                         cuerpoModalBonos.innerHTML = respuesta.html;
-                        var btsSellar = document.getElementsByClassName('btnSellar');
+                        
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
                         
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
@@ -448,7 +447,7 @@ window.onload = function() {
 
                         anterior.addEventListener('click', bono_anterior, false);
                         siguiente.addEventListener('click', bono_siguiente, false);
-                                                                 
+                                                                                        
                     }
                                    
                 };
@@ -463,9 +462,7 @@ window.onload = function() {
         xhr1.send(data);
     }
 
-    btnNuevoBono.addEventListener("click", crear_bono, false);
-
-
+   
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
     /*++++++++++++++++++++++++++++++FUNCIONES NAVEGACION BONOS++++++++++++++++++++++++++++++++++++*/
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
@@ -482,10 +479,12 @@ window.onload = function() {
         xhr1.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     datosRespuesta = this.responseText; 
-                    console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
                         cuerpoModalBonos.innerHTML = respuesta.html;
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
 
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
@@ -499,11 +498,8 @@ window.onload = function() {
                             element.addEventListener('click', borrar_sesion, false);
                         });
 
-                        anterior.addEventListener('click', bono_anterior, false);
-                        siguiente.addEventListener('click', bono_siguiente, false);
-
-                        btnNuevoBono.setAttribute("id_cliente", id_attr);
-                        btnNuevoBono.addEventListener('click', crear_bono, false);
+                        /*btnNuevoBono.setAttribute("id_cliente", id_attr);
+                        btnNuevoBono.addEventListener('click', crear_bono, false);*/
                         
                         if(btsSellar.length > 0){
                             btnNuevoBono.disabled = true;
@@ -536,10 +532,12 @@ window.onload = function() {
         xhr1.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     datosRespuesta = this.responseText; 
-                    console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
                         cuerpoModalBonos.innerHTML = respuesta.html;
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
 
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
@@ -553,11 +551,8 @@ window.onload = function() {
                             element.addEventListener('click', borrar_sesion, false);
                         });
 
-                        anterior.addEventListener('click', bono_anterior, false);
-                        siguiente.addEventListener('click', bono_siguiente, false);
-
-                        btnNuevoBono.setAttribute("id_cliente", id_attr);
-                        btnNuevoBono.addEventListener('click', crear_bono, false);
+                        /*btnNuevoBono.setAttribute("id_cliente", id_attr);
+                        btnNuevoBono.addEventListener('click', crear_bono, false);*/
 
                         if(btsSellar.length > 0){
                             btnNuevoBono.disabled = true;
@@ -585,7 +580,7 @@ window.onload = function() {
 
     function imprimir_cliente(event){
         event.preventDefault();
-        $id_cliente = this.getAttribute('id_cliente');
+        var id_cliente = this.getAttribute('id_cliente');
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', "index.php", true);
         xhr1.onreadystatechange = function() {
@@ -607,7 +602,7 @@ window.onload = function() {
 
         var data = new FormData();
         data.append('imprimir_cliente', 'imprimir_cliente');
-        data.append('id_cliente', $id_cliente);
+        data.append('id_cliente', id_cliente);
         xhr1.send(data);
     }
 
@@ -615,5 +610,38 @@ window.onload = function() {
     Array.from(btsImprimir).forEach(element => {
         element.addEventListener('click', imprimir_cliente, false);
     });
+
+
+    function imprimir_bono(event){
+        event.preventDefault();
+        var id_cliente = btnNuevoBono.getAttribute("id_cliente");
+        var bono_actual = posicion.textContent;
+        var xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', "index.php", true);
+        xhr1.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    datosRespuesta = this.responseText;
+                    console.log(datosRespuesta);
+                    var respuesta = JSON.parse(datosRespuesta);
+                    if (respuesta.OK != null ) {
+                        var ventimp = window.open(' ', 'popimpr');
+                        ventimp.document.write(respuesta.html);
+                        ventimp.document.close();
+                        ventimp.print( );
+                        ventimp.close();
+                                
+                    }
+                                   
+                };
+        
+        };
+
+        var data = new FormData();
+        data.append('imprimir_bono', 'imprimir_bono');
+        data.append('id_cliente', id_cliente);
+        data.append('bono_actual', bono_actual);
+        xhr1.send(data);
+    }
+
 
 }
