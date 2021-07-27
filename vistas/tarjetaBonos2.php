@@ -14,43 +14,44 @@ if(count(get_included_files()) ==1) {
   exit("Acceso directo no permitido.");
 }
 
-function mostrarBonos($bono, $posicion = null){
+function mostrarBonos($bono, $posicion = null, $final = null){
   ob_start();
 ?>
-  <!--Barra para navegar entre bonos-->
-  <?php 
-    if($posicion != null){
-      echo "<div class='text-center'>
-    }
-  ?>
-
-  <!--Tabla para sellar o modificar bonos-->
-  <table class="table table-bordered text-center" id="tabla_bonos">
-    <caption>Nº de Bono: <?= $bono->id_bono ?></caption>
-    <tbody>
-    <?php
-      for($i = 0; $i < $bono->numero_sesiones; $i ++){
-        if($i % 5 == 0){
-          echo "<tr>";
-        }
-        ?>        
-          <td>
-            <div class="mostrar_fecha my-2"><?php if($bono->sesiones != null && isset($bono->sesiones[$i])){echo $bono->sesiones[$i]->fecha;} ?></div>
-            <?php if($bono->sesiones != null  && isset($bono->sesiones[$i])){ ?>
-              <button type="button" class="btn btn-danger btnBorrar mx-2" id_sesion=<?=$bono->sesiones[$i]->id_sesion ?> id_bono=<?=$bono->id_bono ?>>Borrar</button>
-            <?php }else{ ?>
-              <button type="button" class="btn btn-success btnSellar mx-2" id_bono=<?=$bono->id_bono ?>>Sellar</button>
-            <?php } ?>
-          </td>        
+  
+    <!--Barra para navegar entre bonos-->
+    <div class='text-center my-3'>
+      <a id="anterior" class='me-2' <?php if($final == null || $posicion <= 1){ echo "style='visibility: hidden;'";}?>><</a>
+      <span id='posicion'><?= $posicion ?></span>
+      <a id="siguiente" class='ms-2' <?php if($final == null || $posicion >= $final){ echo "style='visibility: hidden;'";}?>>></a>
+    </div>
+    
+    <!--Tabla para sellar o modificar bonos-->
+    <table class="table table-bordered text-center" id="tabla_bonos">
+      <caption>Nº de Bono: <?= $bono->id_bono ?></caption>
+      <tbody>
       <?php
-        if(($i+1) % 5 == 0){
-          echo "</tr>";
-        }    
-      } 
-      ?>
-    </tbody>  
-  </table>   
-
+        for($i = 0; $i < $bono->numero_sesiones; $i ++){
+          if($i % 5 == 0){
+            echo "<tr>";
+          }
+          ?>        
+            <td>
+              <div class="mostrar_fecha my-2"><?php if($bono->sesiones != null && isset($bono->sesiones[$i])){echo $bono->sesiones[$i]->fecha;} ?></div>
+              <?php if($bono->sesiones != null  && isset($bono->sesiones[$i])){ ?>
+                <button type="button" class="btn btn-danger btnBorrar mx-2" id_sesion=<?=$bono->sesiones[$i]->id_sesion ?> id_bono=<?=$bono->id_bono ?>>Borrar</button>
+              <?php }else{ ?>
+                <button type="button" class="btn btn-success btnSellar mx-2" id_bono=<?=$bono->id_bono ?>>Sellar</button>
+              <?php } ?>
+            </td>        
+        <?php
+          if(($i+1) % 5 == 0){
+            echo "</tr>";
+          }    
+        } 
+        ?>
+      </tbody>  
+    </table>   
+  
 <?php
   $texto = ob_get_contents();
   ob_end_clean();

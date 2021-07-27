@@ -36,17 +36,10 @@ if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['eliminar_cliente'])){
   exit(0);
 }
 
-/*if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['crear_bono'])){
-  $bono = Bono::crearObjetoBono($_POST['bono']);
-  $bono->guardar();
-  echo json_encode(['OK'=>$bono, 'html'=> mostrarBonos($bono)]);
-  exit(0);
-}*/
-
 if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['mostrar_bonos'])){
   $cliente = Cliente::getClienteById($_POST['id_cliente']);
   $final = count($cliente->bonos);
-  echo json_encode(['OK'=>$cliente, 'html'=>mostrarBonos($cliente->bonos[$final-1])]);
+  echo json_encode(['OK'=>$cliente, 'html'=>mostrarBonos($cliente->bonos[$final-1], $final, $final)]);
   exit(0);
 }
 
@@ -55,7 +48,8 @@ if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['guardar_sesion'])){
   $bono->anadirSesion($_POST['sesion']);
   $cliente = Cliente::getClienteById($_POST['id_cliente']);
   $final = count($cliente->bonos);
-  echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$final-1])]);
+  $actual = $_POST['bono_actual'];
+  echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$actual-1], $actual, $final)]);
   exit(0);
 }
 
@@ -63,14 +57,28 @@ if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['borrar_sesion'])){
   Sesion::eliminar($_POST['id_sesion']);
   $cliente = Cliente::getClienteById($_POST['id_cliente']);
   $final = count($cliente->bonos);
-  echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$final-1])]);
+  $actual = $_POST['bono_actual'];
+  echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$actual-1], $actual, $final)]);
   exit(0);
 }
+
 if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['crear_bono'])){
   $cliente = Cliente::getClienteById($_POST["id_cliente"]);
   $cliente->anadirBonoCliente($_POST["bono"]);
   $final = count($cliente->bonos);
-  echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$final-1])]);
+  echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$final-1], $final, $final)]);
+  exit(0);
+}
+
+if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST['moverse_bonos'])){
+  $cliente = Cliente::getClienteById($_POST["id_cliente"]);
+  $actual = $_POST['bono_actual'];  
+  $final = count($cliente->bonos);
+  if($_POST['moverse_bonos'] == 'bono_anterior'){
+    echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$actual-2], $actual-1, $final)]);
+  }else{
+    echo json_encode(['OK'=>$cliente, 'html'=> mostrarBonos($cliente->bonos[$actual], $actual+1, $final)]);
+  }
   exit(0);
 }
 
@@ -97,13 +105,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['borrar_filtros'])){
   echo json_encode(['OK'=>$clientes, 'html'=>$html]);
   exit(0);
 }
-
-/*if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reiniciar_tarjeta'])){
-  $cliente = Cliente::getClienteById($_POST['id_cliente']);
-  $cliente->tarjeta_bonos->reiniciarTarjeta();
-  echo json_encode(['OK'=>$cliente, 'html'=>mostrarTarjeta($cliente->tarjeta_bonos->bonos, $cliente->cantidad_bonos)]);
-  exit(0);
-}*/
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['imprimir_cliente'])){
   $cliente = Cliente::getClienteById($_POST['id_cliente']);

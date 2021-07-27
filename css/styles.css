@@ -20,3 +20,17 @@ th{
 #reiniciarBuscar{
     display: none;
 }
+
+#anterior{
+    text-decoration: none !important;
+    color: black !important;
+}
+
+#anterior:hover{cursor: pointer;}
+
+#siguiente{
+    text-decoration: none !important;
+    color: black !important;
+}
+
+#siguiente:hover{cursor: pointer;}

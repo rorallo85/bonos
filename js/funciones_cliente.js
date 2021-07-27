@@ -277,6 +277,9 @@ window.onload = function() {
                             element.addEventListener('click', borrar_sesion, false);
                         });
 
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
+  
                         btnNuevoBono.setAttribute("id_cliente", id_attr);
                         btnNuevoBono.addEventListener('click', crear_bono, false);
 
@@ -311,6 +314,7 @@ window.onload = function() {
     function guardar_sesion(){
         var id_cliente = this.getAttribute('id_cliente');
         var id_bono = this.getAttribute('id_bono');
+        var bono_actual = posicion.textContent;
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', "index.php", true);
         xhr1.onreadystatechange = function() {
@@ -319,7 +323,7 @@ window.onload = function() {
                     console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
-                        tabla_bonos.outerHTML = respuesta.html;
+                        cuerpoModalBonos.innerHTML = respuesta.html;
                         
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
@@ -332,6 +336,9 @@ window.onload = function() {
                             element.setAttribute("id_cliente", id_cliente);
                             element.addEventListener('click', borrar_sesion, false);
                         });
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
 
                         if(btsSellar.length > 0){
                             btnNuevoBono.disabled = true;
@@ -350,6 +357,7 @@ window.onload = function() {
         data.append('id_bono', id_bono);
         data.append("sesion[id_bono]", id_bono);
         data.append("sesion[fecha]", new Date().toISOString().slice(0, 10));
+        data.append('bono_actual', bono_actual);
         xhr1.send(data);
     }
 
@@ -361,6 +369,7 @@ window.onload = function() {
     function borrar_sesion(){
         var id_sesion = this.getAttribute('id_sesion');
         var id_cliente = this.getAttribute('id_cliente');
+        var bono_actual = posicion.textContent;
         var xhr1 = new XMLHttpRequest();
         xhr1.open('POST', "index.php", true);
         xhr1.onreadystatechange = function() {
@@ -369,7 +378,7 @@ window.onload = function() {
                     console.log(datosRespuesta);
                     var respuesta = JSON.parse(datosRespuesta);
                     if (respuesta.OK != null ) {
-                        tabla_bonos.outerHTML = respuesta.html;
+                        cuerpoModalBonos.innerHTML = respuesta.html;
 
                         var btsSellar = document.getElementsByClassName('btnSellar');
                         Array.from(btsSellar).forEach(element => {
@@ -382,6 +391,9 @@ window.onload = function() {
                             element.setAttribute("id_cliente", id_cliente);
                             element.addEventListener('click', borrar_sesion, false);
                         });
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
 
                         if(btsSellar.length > 0){
                             btnNuevoBono.disabled = true;
@@ -400,6 +412,7 @@ window.onload = function() {
         data.append('id_cliente', id_cliente);
         //data.append('id_bono', id_bono);
         data.append('id_sesion', id_sesion);
+        data.append('bono_actual', bono_actual);
         xhr1.send(data);
     }
 
@@ -432,6 +445,9 @@ window.onload = function() {
                             element.setAttribute("id_cliente", id_cliente);
                             element.addEventListener('click', borrar_sesion, false);
                         });
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
                                                                  
                     }
                                    
@@ -448,7 +464,120 @@ window.onload = function() {
     }
 
     btnNuevoBono.addEventListener("click", crear_bono, false);
+
+
+    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+    /*++++++++++++++++++++++++++++++FUNCIONES NAVEGACION BONOS++++++++++++++++++++++++++++++++++++*/
+    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
     
+    /**
+     * Funcion que muestra el bono anterior al actual
+     * 
+     */
+     function bono_siguiente(){
+        var id_attr = btnNuevoBono.getAttribute("id_cliente");
+        var bono_actual = posicion.textContent;
+        var xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', "index.php", true);
+        xhr1.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    datosRespuesta = this.responseText; 
+                    console.log(datosRespuesta);
+                    var respuesta = JSON.parse(datosRespuesta);
+                    if (respuesta.OK != null ) {
+                        cuerpoModalBonos.innerHTML = respuesta.html;
+
+                        var btsSellar = document.getElementsByClassName('btnSellar');
+                        Array.from(btsSellar).forEach(element => {
+                            element.setAttribute("id_cliente", id_attr);
+                            element.addEventListener('click', guardar_sesion, false);
+                        });
+
+                        var btsBorrar = document.getElementsByClassName('btnBorrar');
+                        Array.from(btsBorrar).forEach(element => {
+                            element.setAttribute("id_cliente", id_attr);
+                            element.addEventListener('click', borrar_sesion, false);
+                        });
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
+
+                        btnNuevoBono.setAttribute("id_cliente", id_attr);
+                        btnNuevoBono.addEventListener('click', crear_bono, false);
+                        
+                        if(btsSellar.length > 0){
+                            btnNuevoBono.disabled = true;
+                        }else{
+                            btnNuevoBono.disabled = false;
+                        }
+                                                                 
+                    }
+                                   
+                };
+        
+        };
+
+        var data = new FormData();
+        data.append('moverse_bonos', 'bono_siguiente');
+        data.append('id_cliente', id_attr);
+        data.append('bono_actual', bono_actual);
+        xhr1.send(data);
+    }
+
+    /**
+     * Funcion que muestra el bono siguiente al actual
+     * 
+     */
+     function bono_anterior(){
+        var id_attr = btnNuevoBono.getAttribute("id_cliente");
+        var bono_actual = posicion.textContent;
+        var xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', "index.php", true);
+        xhr1.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    datosRespuesta = this.responseText; 
+                    console.log(datosRespuesta);
+                    var respuesta = JSON.parse(datosRespuesta);
+                    if (respuesta.OK != null ) {
+                        cuerpoModalBonos.innerHTML = respuesta.html;
+
+                        var btsSellar = document.getElementsByClassName('btnSellar');
+                        Array.from(btsSellar).forEach(element => {
+                            element.setAttribute("id_cliente", id_attr);
+                            element.addEventListener('click', guardar_sesion, false);
+                        });
+
+                        var btsBorrar = document.getElementsByClassName('btnBorrar');
+                        Array.from(btsBorrar).forEach(element => {
+                            element.setAttribute("id_cliente", id_attr);
+                            element.addEventListener('click', borrar_sesion, false);
+                        });
+
+                        anterior.addEventListener('click', bono_anterior, false);
+                        siguiente.addEventListener('click', bono_siguiente, false);
+
+                        btnNuevoBono.setAttribute("id_cliente", id_attr);
+                        btnNuevoBono.addEventListener('click', crear_bono, false);
+
+                        if(btsSellar.length > 0){
+                            btnNuevoBono.disabled = true;
+                        }else{
+                            btnNuevoBono.disabled = false;
+                        }
+                                                                 
+                    }
+                                   
+                };
+        
+        };
+
+        var data = new FormData();
+        data.append('moverse_bonos', 'bono_anterior');
+        data.append('id_cliente', id_attr);
+        data.append('bono_actual', bono_actual);
+        xhr1.send(data);
+    }
+
 
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
     /*++++++++++++++++++++++++++++++FUNCIONES IMPRIMIR+++++++++++++++++++++++++++++++++++++++++++++*/
